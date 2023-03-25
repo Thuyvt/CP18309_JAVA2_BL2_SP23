@@ -9,7 +9,7 @@ package Day5;
  *
  * @author ThuyVT
  */
-public class LapTop {
+public class LapTop implements Comparable<LapTop> {
     private String ten;
     private double gia;
     private String hang;
@@ -65,6 +65,11 @@ public class LapTop {
 
     public void setTrangThai(boolean trangThai) {
         this.trangThai = trangThai;
+    }
+
+    @Override
+    public int compareTo(LapTop o) {
+        return (int) (o.getGia() - this.gia);
     }
     
     
