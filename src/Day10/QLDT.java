@@ -45,15 +45,15 @@ public class QLDT extends javax.swing.JFrame {
         danhSach.add(new DonThuoc("Thuốc nhiệt miệng", 2, "Viên", 25, "Hãng 1", "abcdef", true));
         danhSach.add(new DonThuoc("Thuốc đau mắt", 4, "Lọ", 50, "Hãng 3", "45578", false));
         danhSach.add(new DonThuoc("Thuốc đau răng", 6, "Viên", 3, "Hãng 5", "ghjjk", true));
-        danhSach.add(new DonThuoc("Thuốc cảm", 5, "Vỉ", 12, "Hãng 1", "aaaaa", false));
+//        danhSach.add(new DonThuoc("Thuốc cảm", 5, "Vỉ", 12, "Hãng 1", "aaaaa", false));
     }
-    
+
     // hiển thị lên bảng
     public void hienThiLenBang(List<DonThuoc> danhSach) {
         // reset bảng về 0
         defaultTable.setRowCount(0);
-        for (DonThuoc dt: danhSach) {
-            defaultTable.addRow(new Object[] {
+        for (DonThuoc dt : danhSach) {
+            defaultTable.addRow(new Object[]{
                 dt.getTen(),
                 dt.getSoLuong(),
                 dt.getLoai(),
@@ -65,7 +65,7 @@ public class QLDT extends javax.swing.JFrame {
             });
         }
     }
-    
+
     // hiển thị thông tin đối tượng lên form
     public void hienThiLenForm(DonThuoc dt) {
         txtTen.setText(dt.getTen());
@@ -81,6 +81,31 @@ public class QLDT extends javax.swing.JFrame {
         cboHang.setSelectedItem(dt.getHang());
         txtMoTa.setText(dt.getMota());
         chkTheoDon.setSelected(dt.isTheoDon());
+    }
+
+    // Lấy dữ liệu từ form để tạo đối tượng
+    public DonThuoc layDuLieuTuForm() {
+        String loai = "Vỉ";
+        if (rdoVien.isSelected()) {
+            loai = "Viên";
+        } else if (rdoLo.isSelected()) {
+            loai = "Lọ";
+        }
+//        return new DonThuoc(txtTen.getText(),
+//                Integer.parseInt(txtSoLuong.getText()), 
+//                rdoVien.isSelected() ? "Viên" : rdoLo.isSelected() ? "Lọ" : "Vỉ"
+//                , Double.parseDouble(txtGia.getText()), 
+//                cboHang.getSelectedItem().toString()
+//                , txtMoTa.getText(), chkTheoDon.isSelected());
+        DonThuoc dt = new DonThuoc();
+        dt.setTen(txtTen.getText());
+        dt.setSoLuong(Integer.parseInt(txtSoLuong.getText()));
+        dt.setLoai(loai);
+        dt.setGia(Double.parseDouble(txtGia.getText()));
+        dt.setHang(cboHang.getSelectedItem().toString());
+        dt.setMota(txtMoTa.getText());
+        dt.setTheoDon(chkTheoDon.isSelected());
+        return dt;
     }
 
     /**
@@ -115,6 +140,7 @@ public class QLDT extends javax.swing.JFrame {
         btnGhi = new javax.swing.JButton();
         btnDoc = new javax.swing.JButton();
         btnThem = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -183,8 +209,25 @@ public class QLDT extends javax.swing.JFrame {
         });
 
         btnDoc.setText("Đọc");
+        btnDoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDocActionPerformed(evt);
+            }
+        });
 
         btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
+
+        btnReset.setText("Reset");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -239,9 +282,11 @@ public class QLDT extends javax.swing.JFrame {
                             .addComponent(jScrollPane1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnGhi, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnDoc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btnGhi, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnDoc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnReset, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -276,7 +321,8 @@ public class QLDT extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(txtMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
-                    .addComponent(chkTheoDon))
+                    .addComponent(chkTheoDon)
+                    .addComponent(btnReset))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -302,6 +348,39 @@ public class QLDT extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, mes);
         }
     }//GEN-LAST:event_btnGhiActionPerformed
+
+    private void btnDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDocActionPerformed
+        // TODO add your handling code here:
+        String mes = new DonThuocService().docFile("donthuoc.txt", list);
+        JOptionPane.showMessageDialog(this, mes);
+        System.out.println("Danh sách từ jFrame:" + list.size());
+
+        hienThiLenBang(list);
+    }//GEN-LAST:event_btnDocActionPerformed
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+        // kiểm tra dữ liệu đầu vào
+        list.add(layDuLieuTuForm());
+        hienThiLenBang(list);
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        // TODO add your handling code here:
+        txtTen.setText("");
+        txtSoLuong.setText("");
+        rdoVi.setSelected(true);
+        txtGia.setText("");
+//        cboHang.setSelectedItem("Hãng 1");
+        // vị trí
+        cboHang.setSelectedIndex(0);
+        txtMoTa.setText("");
+        chkTheoDon.setSelected(false);
+        // xóa danh sách tại thời điểm hiện tại
+        list.clear();
+        layDs(list); // lấy lại danh sách ban đầu 
+        hienThiLenBang(list); // hiển thị lại dữ liệu lên bảng
+    }//GEN-LAST:event_btnResetActionPerformed
 
     /**
      * @param args the command line arguments
@@ -341,6 +420,7 @@ public class QLDT extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDoc;
     private javax.swing.JButton btnGhi;
+    private javax.swing.JButton btnReset;
     private javax.swing.JButton btnThem;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cboHang;
