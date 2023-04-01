@@ -34,15 +34,15 @@ public class DaLuong extends javax.swing.JFrame implements Runnable {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblTieuDe = new javax.swing.JLabel();
         lblChay = new javax.swing.JLabel();
         lblMayTinh = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel1.setText("ĐA LUỒNG");
+        lblTieuDe.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
+        lblTieuDe.setForeground(new java.awt.Color(0, 153, 153));
+        lblTieuDe.setText("ĐA LUỒNG ");
 
         lblChay.setText("Thời gian chạy");
 
@@ -54,7 +54,7 @@ public class DaLuong extends javax.swing.JFrame implements Runnable {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(115, 115, 115)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblTieuDe, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(147, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
@@ -67,7 +67,7 @@ public class DaLuong extends javax.swing.JFrame implements Runnable {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(lblTieuDe)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblChay)
@@ -115,9 +115,9 @@ public class DaLuong extends javax.swing.JFrame implements Runnable {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblChay;
     private javax.swing.JLabel lblMayTinh;
+    private javax.swing.JLabel lblTieuDe;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -150,6 +150,11 @@ public class DaLuong extends javax.swing.JFrame implements Runnable {
             
             lblChay.setText(h + ":" + m + ":" + s);
             lblMayTinh.setText(gio + ":" + phut + ":" + giay);
+            
+            // chạy chữ
+            String kyTu = lblTieuDe.getText().substring(0, 1);
+            String tieuDeMoi = lblTieuDe.getText().substring(1);
+            lblTieuDe.setText(tieuDeMoi + kyTu);
             try {
                 Thread.sleep(1000);// nghỉ giữa các vòng lặp
             } catch (InterruptedException ex) {
